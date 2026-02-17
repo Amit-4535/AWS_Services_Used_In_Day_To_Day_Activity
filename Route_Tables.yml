@@ -1,0 +1,45 @@
+
+
+Route Table 
+
+
+- Route Table in a VPC is used to control how network traffic moves inside the VPC and outside to the internet or other networks.
+- in simple -- Route Table = Rules that tell packets “where to go next.” (we are deciding that where the traffic must be go)
+
+  Without a route table, the system doesn’t know where to send the traffic.
+
+Note -- Each Subnet must be associated with a Route Table
+You can have multiple route tables
+Public and Private subnets usually have different route tables
+
+
+Steps to create the Route table and subnet Association to the route tables..
+
+- select create route table
+- name to your route table
+- select your VPC
+- and just create it
+
+now once the Route table is created, we need to assign the subnets to the route tables, below is the steps..
+
+- go to route table
+- select your route table
+- go to subnet association tab
+- edit subnet association
+- select your subnet
+- save the association
+
+
+  now we have associated the subnets to the route table..
+  now for accessing the internet by internet gateway we need to add the entry of IGW in public route table as public subnet is associated in this route table..
+
+steps to add the internet gateway in public route table..
+- go to route table
+- select public route table
+- go to route tab
+- click on edit route
+- click add route -- in drop down of target -- select internet gateway -- in the destination -- mention IP as -- 0.0.0.0/0 (standard entry of IGW)
+- save the changes.. 
+
+
+ *****************************************         This is how Route Table we are using           *********************************************************** 

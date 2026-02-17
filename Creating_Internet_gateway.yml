@@ -1,0 +1,36 @@
+
+
+
+Internet Gateway
+
+
+The main purpose of the Internet Gateway is..
+- An Internet Gateway is attached to a VPC so that resources in public subnets can send and receive traffic from the internet.
+
+Without an Internet Gateway:
+
+Instances cannot access the internet
+Users cannot reach your public servers
+
+
+Things to remember --
+- IGW works only with Public Subnets
+- Private subnets do not use IGW directly
+
+
+
+now let us create the internet gateway and will attach to the VPC..
+
+- go to internet gateway and - Select create internet gateway
+- name to the internet gateway
+- create it 
+- once created -- go the action
+- select attach to VPC
+- select your VPC and
+- click on attach
+
+
+
+
+
+****************************************      This is how we are using the Internet Gateway                 *********************************************
