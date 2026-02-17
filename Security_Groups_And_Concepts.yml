@@ -3,6 +3,8 @@
 Security Groups..
 
 
+Note - Secuirity group is working for Instance level
+
 Security Groups are virtual firewalls used to control inbound and outbound traffic for resources inside a VPC..
 
 In Amazon Web Services (AWS), Security Groups are attached to instances (EC2), load balancers, databases, etc.
