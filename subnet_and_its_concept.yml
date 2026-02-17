@@ -1,0 +1,45 @@
+
+
+Creating the subnet as per the requirement..
+
+
+In simple word the subnet means -- Subnet = Division of a big network into smaller networks
+
+we are creating the multiple subnets inside the VPC (deviding the VPC and creating the subnets..)
+
+we can create only 2 types of subnets..
+- public subnet     - Has Internet Gateway, and Used for Web Servers, Load Balancers
+- private subnet     - No direct internet, and Used for Databases, Internal Apps
+
+
+now let us create the public and private subnet..
+
+- now we have a VPC with CIDR block as 10.0.0.0/23 that means total we are having 512 IP's, now i want to split this VPC in to 2 subnets.
+  public and private with holding equal IP's.. 256 for each..
+
+steps to creat the subnets.
+- go to subnet 
+- select create subnet
+- select your VPC
+- name to the subnet like (DEMO_subnet)
+- select availability zones
+- mention the IPV4 CIDR for your subnet
+  like (10.0.0.0/24)  - that means it is holding the 256 IP's
+- create the subnet.
+
+  i am following the same steps and creating one more subnet - as private subnet..
+
+  the CIDR of the subnet as -- 10.0.1.0/24 -- that means it is holding another 256 ips from the VPC..
+
+why we have selected 10.0.1.0/24?
+
+because earlier subnet - 10.0.0.0/24 are now holded 256 ips, now this one block is already occupied, hence we used 10.0.1.0/24 -- that means this 
+subnet will be starting from the 257 ip.
+
+
+in the CIDR block -- each block will hold the 256 ips.. and the ips will be starting from the 0 (that means 1st ip in the 0th position and last ip in the 255th position)
+
+
+
+
+*********************************               This is how we are creating the subnets             ***********************************************************************
