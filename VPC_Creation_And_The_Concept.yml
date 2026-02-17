@@ -1,0 +1,81 @@
+
+
+VPC (Virtual Private Cloud)
+
+A Virtual Private Cloud (VPC) is a virtual network.
+
+“A VPC is a logically isolated virtual network in the cloud where we launch and manage our resources securely with full control over IPs, routing, and security.”
+
+
+Basically we have 3 types of the VPC
+
+public cloud
+private cloud 
+hybrid cloud
+
+1 ) Public VPC
+
+A Public VPC is a VPC where resources can directly access the Internet.
+Characteristics
+Has Internet Gateway attached.
+Instances get Public IPs.
+
+Used for Web Servers, Load Balancers, Bastion Hosts.
+
+2 ) Private VPC
+
+A Private VPC (or Private Network inside VPC) is where resources cannot directly access the Internet.
+Characteristics
+No public IPs.
+Used for Databases, Internal Apps, Backend Services.
+Often uses NAT Gateway if outbound internet is needed.
+
+
+3 ) Hybrid VPC
+
+Connected to On-Premise Data Center using VPN or Direct Connect.
+Used by enterprises migrating gradually to cloud.
+
+
+
+Steps to create the VPC..
+
+- go to VPC and select create VPC
+- select vpc only
+- name to the VPC
+- select IPV4 and mention the CIDR block here..
+- enter the CIDR block and create the VPC
+
+  note - for 500 ips i am selecting the vpc as 10.0.0.0/23  -- it will come with the total 512 IP's in which 5 ips will be reserved..
+
+Please use the below table while creating the CIDR..
+
+| CIDR | Subnet Mask     | Total IPs | Usable IPs* |
+| ---- | --------------- | --------- | ----------- |
+| /16  | 255.255.0.0     | 65,536    | 65,531      |
+| /17  | 255.255.128.0   | 32,768    | 32,763      |
+| /18  | 255.255.192.0   | 16,384    | 16,379      |
+| /19  | 255.255.224.0   | 8,192     | 8,187       |
+| /20  | 255.255.240.0   | 4,096     | 4,091       |
+| /21  | 255.255.248.0   | 2,048     | 2,043       |
+| /22  | 255.255.252.0   | 1,024     | 1,019       |
+| /23  | 255.255.254.0   | 512       | 507         |
+| /24  | 255.255.255.0   | 256       | 251         |
+| /25  | 255.255.255.128 | 128       | 123         |
+| /26  | 255.255.255.192 | 64        | 59          |
+| /27  | 255.255.255.224 | 32        | 27          |
+| /28  | 255.255.255.240 | 16        | 11          |
+
+
+Note -- * Usable IPs = Total IPs − 5 (Cloud providers usually reserve 5 IPs per subnet)
+
+the reserved IP's are allocated as below..
+1. Network Address (First IP) - Identifies the network itself.
+2. VPC Router - Used by AWS as the default gateway.
+3. DNS Server - AWS internal DNS.
+4. Future Use - Reserved by AWS for future networking features.
+5. Broadcast Address (Last IP) - Traditionally used for broadcasting to all hosts.
+
+
+
+****************************              This is how we can create the VPC                 ************************************************
