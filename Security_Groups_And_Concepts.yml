@@ -1,0 +1,49 @@
+
+
+Security Groups..
+
+
+Security Groups are virtual firewalls used to control inbound and outbound traffic for resources inside a VPC..
+
+In Amazon Web Services (AWS), Security Groups are attached to instances (EC2), load balancers, databases, etc.
+
+it decides -
+- Who can enter the server
+- Who can leave the server
+- Which ports are open or closed
+
+  
+  
+  This will be useful in 
+
+- Prevents unauthorized access.
+
+ Example -
+- Allow SSH (Port 22) only from your office IP.
+- Block all other IPs.
+
+
+ Inbound Rules (Incoming Traffic)
+- from which port the request will be coming in my network -- that we are deciding here..
+
+ Outbound Rules (Outgoing Traffic)
+- from which port the request will go out that we can decide here.. 
+
+
+Note - Security group is stateful
+
+- Stateful → If inbound is allowed, response automatically allowed.
+- Default Deny → If rule not present, traffic is blocked.
+- Instance Level → Applied directly to servers.
+- Allow Rules Only → No explicit “deny” rules
+
+
+  Steps to create the Security Group..
+
+- select create Security Group
+- Add discription if required
+- select your VPC
+- create the inbound and outbound rules here..
+
+
+  *******************************************     This is how we are Creating the Security Groups                               ****************************************
