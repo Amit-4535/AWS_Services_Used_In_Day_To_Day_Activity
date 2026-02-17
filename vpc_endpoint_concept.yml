@@ -1,0 +1,50 @@
+
+
+VPC ENDPOINT
+
+VPC endpoint are used to EC2 instance in a private subnet access Amazon S3 using a VPC Gateway Endpoint — without using a NAT Gateway or public internet.
+
+The use case like - when you have a public instance -- you have the internet connection and if role attached - then you will be getting the internet connection and accessing the services of aws as well..
+
+If you have a private instance -- then you can attaching the NAT to access the internet connection -- and attaching roles or policies aws services will be accessed..
+
+
+Note -- but now the thing is -- i have a private instance -- that means no internet connection -- no NAT configured -- so i am now not able to access the internet connection as well as not accessing the aws services.. right ??  but using the vpc endpoint i can access the aws listed services, but not getting the internet connection..
+let us see that how we can do that..
+
+
+- create a user and assign administrator or s3 full access policy to him.
+- create the access or the secrete key
+
+- now install the aws CLI on your instance
+- configure your user by the command -- aws configure command..
+
+
+- now let us setup the vpc endpoint
+
+- go to vpc endpoint option
+- select create endpoint
+- name to the endpoint
+- select aws services
+- select required service -- (lot of services are llisted here)/ (in my case i am selecting aws s3 service)
+- select your vpc and create the endpoint
+
+
+
+while configuring the vpc endpoint -- 2 options are there -- gateway and interface -- we are going with the gateway -- not interface
+
+
+- now we already did the bastion host to our private instance from the public instance -- right?? and we already have configured the user by the aws configure command..
+
+- now let us use the command -- aws s3 ls 
+  (this will show you the list of buckets from your account)
+
+
+  note -- if you try to use the command -- ping google.com -- you will get nothing -- that means no internet connection -- still we are getiing the aws services and we can work on those service..
+
+
+  so for this reason we are using the vpc endpoint..
+
+
+***********************************        This is how we are using the VPC Endpoint                **********************************************************
+
