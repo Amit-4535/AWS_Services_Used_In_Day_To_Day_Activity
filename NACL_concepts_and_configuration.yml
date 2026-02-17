@@ -1,0 +1,55 @@
+
+
+NACL
+
+Network Access Control List
+
+NACL (Network Access Control List) is a firewall at the Subnet Level in a VPC.
+NACL controls traffic entering and leaving an entire subnet, whereas Security Groups control traffic at the instance level.
+
+NACL = Firewall for the whole Subnet
+
+Security Group → Server Level
+NACL → Subnet Level
+
+why??
+- It provides double protection along with Security Groups.
+
+
+
+You can:
+  - Allow specific IPs
+  - Deny malicious IP ranges
+  - Restrict ports for the whole subnet
+
+
+
+  Inbound Rules -- Controls traffic coming into the subnet.
+
+  Outbound rules -- Controls traffic going out of the subnet.
+
+
+  Note -- NACL is stateless
+
+  stateless means -- If you allow inbound traffic, you must also allow outbound manually.
+  It does not automatically allow return traffic.
+
+
+Steps to create the NACL
+
+- go to NACl
+- name to NACL
+- select your vpc
+
+
+- once created edit inbound and outboud rules as 
+- mention rule number
+- select type of protocol
+- select the source (incoming and outgoing)
+- save changes..
+
+
+
+
+********************************    This is how we are configuring the NACL           ********************************************************
+
