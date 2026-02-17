@@ -1,0 +1,31 @@
+
+Bastion Host
+
+
+The Basic Concept of Bastion Host is we are login on private instance throuh the public host.
+
+A Bastion Host (also called Jump Server)
+
+
+Steps to create the bastion host from public to private..
+
+- Launched ec2-public instance inside the public subnet.. it contains the IG attached..
+
+- Launched ec2-private instance in private subnet.. (private subnet or instance don’t have internet connections..)
+
+- Now logged public instance on putty and given sudo access.. now I wanted to do the bastion of for my private instance of the public instance..
+
+- Now logged in with winscp and copied key myfirstkey.pem to my local to ec2 instance.. and change the permission of myfirstkey.pem file by using 
+   chmod 600 myfirstkey.pem
+
+- Now permission is changed of the file, now we will try to make the connection, or get the private instance access with the bastion host by using the command
+  ssh -i myfirstkey.pem ec2-user@PrivateIPofPrivateInstance
+
+Note - With the bastion host option we are not getting the internet connection to our private instance..
+      just we can login to the server and can work here..
+
+      to getting the internet connection to our private instance -- we need to use the NAT gateway here..
+
+
+
+****************************************         This is how we are using the Bastion Host            *****************************************************

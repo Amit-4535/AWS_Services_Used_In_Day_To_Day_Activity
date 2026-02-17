@@ -1,0 +1,57 @@
+
+
+NAT Gateway
+
+
+A NAT (Network Address Translation) Gateway enables instances in a private subnet to:
+•	Access the internet
+•	But NOT be accessed from the internet
+
+
+Why do we need NAT gateway ??
+In a typical VPC setup, instances in private subnets:
+•	Cannot access the internet directly
+•	Need to download updates, packages, or connect to public APIs
+A NAT Gateway solves this by allowing only outbound access to the internet via a public subnet.
+
+
+Note  You **must create the NAT Gateway in a 🟩 public subnet.
+
+💡 Why?
+Because a NAT Gateway needs:
+•	Internet access to forward traffic from private subnets out to the internet
+•	To work, it requires a route to an Internet Gateway (IGW), and only public subnets are connected to an IGW
+
+
+Steps to create the NAT Gateway..
+- Go to NAT Gateway section
+- select create NAT Gateway
+- Name to the NAT Gateway
+- select availabilty Zonal here -- (cause -- we need to provide the granular control within a specific availability zone, adhering to subnet level settings.)
+- select subnet here  -- select public subnet here (cause -- the IGW is attached in public subnet, that is why select Public subnet here)
+- Allocate the EIP (Elastic IP here)
+- And select create NAT Gateway
+
+
+Note -- we need to edit the route table -- need to add the entry of NAT in private subnet..
+(NAT will be creating in Public Subnet)
+(add the entry of NAT in private route table)
+
+- come to private route table
+- edit/ select private route table
+- click on route
+- edit route -- add route
+- in target -- select NAT (add your NAT ID here), in destination -- make entry as 0.0.0.0/0 (standard entry of NAT)
+- save the changes..
+
+
+
+  now we can see that we are able to connect with the internet for our private instance.. by the command -- ping google.com
+  (do the bastion host from the public instance to private -- and attah the NAT to getting the internet connection to our private servers..)
+
+from now we can get the internet connection
+can download the packages
+basically internet related things can be done here..
+
+
+*************************************       This is how we are using the NAT GATEWAY              **************************************************************
