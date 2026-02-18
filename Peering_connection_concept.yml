@@ -1,0 +1,184 @@
+
+
+VPC Peering 
+
+
+what?
+
+Peering connection means -- VPC Peering = Private Connection between two VPCs
+
+It allows two Virtual Private Clouds (VPCs) to talk to each other privately using internal IP addresses.
+
+- No internet.
+- No VPN.
+- No public exposure.
+
+
+why?
+
+Why Organizations Use VPC Peering
+
+In companies, you rarely have only one VPC.
+Usually there are multiple VPCs for:
+
+Dev Environment
+QA / Testing
+Production
+Shared Services
+Security / Logging
+Data / Analytics
+
+Instead of putting everything in one VPC (which becomes messy and insecure), organizations separate workloads.
+
+But sometimes these VPCs must communicate. That’s where VPC Peering comes in.
+
+
+what it actually does ??
+It creates a direct private network path between two VPCs so:
+  EC2 in VPC-A can ping EC2 in VPC-B
+  App server can talk to DB server in another VPC
+  Microservices can communicate
+  Shared services can be reused
+
+  Think of it like: Two different office buildings connected by a private underground tunnel.
+
+
+Real-World Example Scenario
+
+Company Structure
+
+- VPC-1 → Application Servers
+- VPC-2 → Database Servers
+- VPC-3 → Monitoring & Logging
+
+You do NOT want database servers exposed to the internet.
+
+So instead of public IPs:
+
+  - App VPC peers with DB VPC
+
+    - App VPC peers with Monitoring VPC
+
+      - Now communication happens privately and securely.
+
+
+Let see now -- how this setup will be configured??
+
+Create VPC-A
+- Name: VPC-A
+- CIDR: 10.0.0.0/16
+- Tenancy: Default
+
+
+create VPC-B
+- Name: VPC-B
+- CIDR: 192.168.0.0/16
+- Tenancy: Default
+
+Note -- Important: CIDR must NOT overlap.
+
+
+now: create the subnet in the VPC-A and VPC-B
+  VPC-A -- Subnet: 10.0.1.0/24
+  VPC-B -- Subnet: 192.168.1.0/24
+
+
+Now : let us create 2 instance in VPC-A and VPC-B
+  EC2-A → in VPC-A
+  EC2-B → in VPC-B
+
+  modify the security groups as Security Group:
+    Allow ICMP (Ping)
+    Allow SSH (22)
+
+
+now : let us create the VPC peering connection --
+
+  - Go to VPC Dashboard
+  - Left menu → Peering Connections
+  - Click Create Peering Connection
+
+    Settings:
+      - Name: A-to-B-Peer
+      - Requester VPC: VPC-A
+        Accepter VPC: VPC-B
+and click create..
+
+Accept Peering Request:
+  - Select the peering request
+  - Click Actions → Accept Request
+
+    you will Now see status = Active
+
+
+Update Route Tables (MOST IMPORTANT):
+  Without this, peering will NOT work.
+
+- select the Route Table of VPC-A
+  Add route:
+    Destination: 192.168.0.0/16  (basically the CIDR of another VPC)
+    Target: Peering Connection ID
+
+- edit the Route Table of VPC-B
+  Add route:
+    Destination: 10.0.0.0/16
+      Target: Peering Connection ID
+
+
+now: modify the security groups of your instance as:
+  Both EC2 security groups must allow:
+    ICMP (Ping)
+    SSH (optional)
+    Source: Other VPC CIDR
+
+example -- 
+EC2-A allow 192.168.0.0/16
+EC2-B allow 10.0.0.0/16
+
+
+now: test the connectivity 
+
+  SSH into EC2-A and ping private IP of EC2-B
+  ping 192.168.1.x
+
+  If reply comes → 🎉 Success! Peering Working
+
+  this setup is for industry level.. from directly laptop we can use this peering connection..
+
+why we are creating these below steps -- due to making the SSH into the instance and checking the connectivity:
+
+now for the demo purpose in the same setup let us ammend here few things..
+
+- create one subnet called -- public subnet..
+- create one IGW and attach to the VPC-A
+- crate the route table as -- publicRT -- and associate your newly created subnet -- and make the IGW entry in this route table..
+
+(now we can do the ssh into the instance now..)
+
+- now let us create the instance (public_instance)
+- ssh into your instance.
+
+- copy/paste your .pem file on to the instance (public_instance) using the winscp application..
+- change the permission of the .pem file as -- chmod 600 keyname.pem
+- now use the command to ssh into the VPC-A instance (VPC-A private instance) -- where we dont have the internet connection -- use the command as:
+  ssh -i ubuntu@private_ip_of_private_instance
+
+  (now this will be making the ssh connection into this instance -- we can make the ssh through this above setup)
+
+  now check we can ping to the google by -- ping google.com  -- you will not able to ping here -- means no internet for this instance.. now --
+
+  check we can able to connect with the instance which we have created for the peering connection -- the instance is present in another VPC..
+
+  use the command -- ping private_ip_of_the_another_vpc's_instance.
+            example -- ping 192.168.1.52
+
+  (now you can see that we are getting the response back..)
+
+
+  that means we have correctly made the setup here..
+
+
+
+
+
+**************************************     This is how we are creating the Peeering Connection in organization        ******************************************
