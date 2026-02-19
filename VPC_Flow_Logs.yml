@@ -1,0 +1,134 @@
+
+
+VPC Flow Logs
+
+
+VPC Flow Logs is an AWS feature that captures information about IP traffic going to and from network interfaces in your VPC.
+
+It helps you monitor and troubleshoot network traffic inside a Amazon Web Services (AWS) Virtual Private Cloud (VPC).
+
+
+Why Do We Use VPC Flow Logs?
+In real-world DevOps / Cloud environments, we use VPC Flow Logs for:
+ 1) Troubleshooting Network Issues
+  example -
+
+  EC2 instance cannot connect to database
+  SSH not working
+  Application cannot reach external API
+
+  Flow logs help answer:
+    Was traffic allowed or denied?
+    Which security group or NACL blocked it?
+
+2) Security Monitoring:
+  Detect suspicious IP addresses
+  Identify port scanning attempts
+  Monitor unusual traffic patterns
+  Audit rejected traffic
+
+
+3) Compliance & Auditing:
+  Network traffic logging
+  Security investigation logs
+  Forensics analysis
+
+  4) Monitoring Traffic Patterns
+  How much traffic is flowing?
+  Which IP is sending most traffic?
+  Which port is most used?
+
+
+
+How VPC Flow Logs Works (Step-by-Step):
+  Traffic Flow Happens
+  Example:
+    EC2 → RDS
+    EC2 → Internet
+    EC2 → EC2
+    External → EC2
+
+AWS Captures Metadata (Not Full Packet):
+  It captures only metadata like:
+    Source IP
+    Destination IP
+    Source port
+    Destination port
+    Protocol
+    Packet count
+    Bytes transferred
+    ACCEPT or REJECT
+    Timestamp
+
+
+Log Storage:
+  Amazon CloudWatch (CloudWatch Logs)
+  Amazon S3 (S3 Bucket)
+
+
+Real Devops example:
+  scenario: Application cannot connect to database in private subnet.
+
+  as a devops engineer we need to do the below :
+    Enable VPC Flow Logs on subnet.
+    Send logs to CloudWatch.
+    Filter logs:
+      action = REJECT
+      dstPort = 3306
+      Find that NACL is blocking port 3306.
+      Fix NACL rule.
+
+    🎯 Root cause identified using Flow Logs.
+
+
+
+Example of flow logs which is stored in s3:
+
+  VPC Flow Logs
+
+VPC Flow Logs capture information about the IP traffic going to and from network interfaces in your Virtual Private Cloud (VPC).
+This helps in:
+•	Troubleshooting connectivity issues
+•	Monitoring traffic
+•	Detecting suspicious activity
+📊 What Information is Captured?
+Each log record includes:
+•	Source IP and destination IP
+•	Source and destination port
+•	Protocol
+•	Traffic action (ACCEPT/REJECT)
+•	Bytes transferred
+•	Start and end time
+•	Network interface ID
+
+3 ways we can configure the flow logs 
+
+•  VPC level (all ENIs in the VPC)
+•  Subnet level (all ENIs in the subnet)
+•  Network Interface level (specific ENI)
+
+
+Configuration of flow logs 
+1)	Go to your VPC
+2)	Go to flow log section  select create flow logs
+3)	Give name to your flow log  select filter accept/reject/all
+4)	Select time 10min or 1 min  select destination  it could be your s3 bucket or cloudwatch or data firehouse
+5)	Select your s3 bucket ARN  keep next option is default aws format  and select create flow logs..
+
+Now after completing setup of your flow logs, you can go to the s3 bucket and you will see that you will get the logs in the csv format..
+
+Below information we will get in the csv file..
+
+Version,   account-id,   interface-id,   srcaddr,   dstaddr,   srcport,   dstport,   protocol,   packets,   bytes,   start,   end,   action,   log-status
+2,   767397887039,   eni-0b733c0f3db2e8567,   83.222.190.234,   172.31.90.65,   41066,   1151,   6,   1,   40,   1749116963,   1749117008,   REJECT,   OK
+
+This is how we will get the data inside the bucket, which will be useful to find out the logs of the instance, vpc, subnet..
+
+
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!                             Perfect                                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
